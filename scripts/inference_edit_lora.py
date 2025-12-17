@@ -3,15 +3,23 @@ from PIL import Image
 from transformers import AutoProcessor
 from longcat_image.models import LongCatImageTransformer2DModel
 from longcat_image.pipelines import LongCatImageEditPipeline
+from peft import PeftModel
 
 if __name__ == '__main__':
 
     device = torch.device('cuda')
     checkpoint_dir = './weights/LongCat-Image-Edit'
-    lora_dir = 'output/edit_lora_model/checkpoints-6000/transformer'
+    lora_ckpt = 'output/edit_lora_model/checkpoints-6000/transformer'
+
     text_processor = AutoProcessor.from_pretrained( checkpoint_dir, subfolder = 'tokenizer'  )
     transformer = LongCatImageTransformer2DModel.from_pretrained( checkpoint_dir , subfolder = 'transformer', 
         torch_dtype=torch.bfloat16, use_safetensors=True).to(device)
+
+    print(f"Loading LoRA from {lora_ckpt} using PEFT...")
+    transformer = PeftModel.from_pretrained(transformer, lora_ckpt, is_trainable=False)
+    transformer = transformer.merge_and_unload()
+    transformer = transformer.to(device, dtype=torch.bfloat16)
+    transformer.eval()
 
     pipe = LongCatImageEditPipeline.from_pretrained(
         checkpoint_dir,
@@ -19,18 +27,6 @@ if __name__ == '__main__':
         text_processor=text_processor,
         torch_dtype=torch.bfloat16,
     )
-
-    
-    # Load LoRA weights and (optionally) fuse
-    # Common params: weight_name like 'pytorch_lora_weights.safetensors', and lora_scale.
-    pipe.load_lora_weights(
-        lora_dir,
-        weight_name='adapter_model.safetensors',  # uncomment if your file name is fixed
-        lora_scale=1.0
-    )
-
-    # (Optional) Fuse LoRA for slight speed-up and lower VRAM; after fusing, scale changes require reloading.
-    # pipe.fuse_lora()  # uncomment if your pipeline supports fusing
 
     # pipe.to(device, torch.bfloat16)  # Uncomment for high VRAM devices (Faster inference)
     pipe.enable_model_cpu_offload()  # Offload to CPU to save VRAM (Required ~19 GB); slower but prevents OOM
