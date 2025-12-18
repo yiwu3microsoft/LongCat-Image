@@ -9,7 +9,7 @@ if __name__ == '__main__':
 
     device = torch.device('cuda')
     checkpoint_dir = './weights/LongCat-Image-Edit'
-    lora_ckpt = 'output/edit_lora_model/checkpoints-8000/transformer'
+    lora_ckpt = 'output/edit_lora_model/checkpoints-11000/transformer'
 
     text_processor = AutoProcessor.from_pretrained( checkpoint_dir, subfolder = 'tokenizer'  )
     transformer = LongCatImageTransformer2DModel.from_pretrained( checkpoint_dir , subfolder = 'transformer', 
@@ -46,4 +46,4 @@ if __name__ == '__main__':
         generator=generator
     ).images[0]
 
-    image.save(f'./output/edit_lora_8000_{img_id}.png')
+    image.save(f'/tmp/output/6fb1b1d1-4842-484f-8c08-b09a3199d1f8_3c53764c/results/edit_lora_11000_{img_id}.png')
