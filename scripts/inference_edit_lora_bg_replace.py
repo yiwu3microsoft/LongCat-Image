@@ -35,7 +35,8 @@ if __name__ == '__main__':
 
     img_id = "a10e5e6f-a049-9695-b166-b73938f205fd"
     img = Image.open(f'assets/bg_replace/{img_id}.png').convert('RGB')
-    prompt = 'A bottle with capsules is placed on a table, with Vision & Blue Light text next to it, creating an informative atmosphere.'
+    # prompt = 'A bottle with capsules is placed on a table, with Vision & Blue Light text next to it, creating an informative atmosphere.'
+    prompt = 'Put the product in the more relevant background or context and make it more recognizable and appealing.'
     image = pipe(
         img,
         prompt,
@@ -46,4 +47,4 @@ if __name__ == '__main__':
         generator=generator
     ).images[0]
 
-    image.save(f'/tmp/output/6fb1b1d1-4842-484f-8c08-b09a3199d1f8_3c53764c/results/edit_lora_11000_{img_id}.png')
+    image.save(f'/tmp/output/6fb1b1d1-4842-484f-8c08-b09a3199d1f8_3c53764c/results/edit_lora_11000_general-recontext_{img_id}.png')
