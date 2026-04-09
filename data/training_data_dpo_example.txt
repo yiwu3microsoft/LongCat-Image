@@ -1,0 +1,1 @@
+{"img_path_win": "./data/images/101204614608#2.jpg", "img_path_lose": "./data/images/101204614608#0.jpg", "ref_img_path": "./data/images/101204614608.jpg", "prompt": "Put the product in the more relevant background or context and make it more recognizable and appealing.", "width": 1380, "height": 1986}
