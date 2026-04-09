@@ -14,7 +14,7 @@ prompt_template_encode_end_idx: 5
 
 # 2. Model setting
 text_tokenizer_max_length: 512  # tokenizer max len 
-pretrained_model_name_or_path: "meituan-longcat/LongCat-Image-Edit" # root directory of the model，with vae、transformer、scheduler eta;
+pretrained_model_name_or_path: "./models/LongCat-Image-Edit" # root directory of the model，with vae、transformer、scheduler eta;
 diffusion_pretrain_weight:  null # if a specified diffusion weight path is provided, load the model parameters from the current directory.
 use_dynamic_shifting: true #  scheduler dynamic shifting
 resume_from_checkpoint: latest
@@ -25,7 +25,7 @@ resume_from_checkpoint: latest
 use_ema: False
 ema_rate: 0.999
 mixed_precision: 'bf16'
-max_train_steps: 100000
+max_train_steps: 1000
 gradient_accumulation_steps: 1
 gradient_checkpointing: true
 gradient_clip: 1.0
@@ -37,11 +37,11 @@ adam_beta2: 0.999
 lr_num_cycles: 1
 lr_power: 1.0
 lr_scheduler: 'constant'
-lr_warmup_steps: 1000
+lr_warmup_steps: 100
 beta_dpo: 4000
 
 #4. Log setting
 log_interval: 20
-save_model_steps: 1000
+save_model_steps: 500
 work_dir: 'output/edit_dpo_example'
 seed: 43

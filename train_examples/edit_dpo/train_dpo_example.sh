@@ -9,5 +9,6 @@ echo "script_dir" ${script_dir}
 deepspeed_config_file=${project_root}/misc/accelerate_config.yaml
 
 accelerate launch  --mixed_precision bf16 --num_processes 2 --config_file ${deepspeed_config_file} \
-${script_dir}/train_edit_dpo.py \
---config ${script_dir}/train_config_dpo_example.yaml
+${script_dir}/train_edit_dpo_low_VRAM.py \
+--config ${script_dir}/train_config_dpo_example.yaml \
+--allow_tf32
