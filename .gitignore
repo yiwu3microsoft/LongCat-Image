@@ -18,3 +18,7 @@ __pycache__/
 **/output/
 **/build/
 weights/*
+
+models/
+PAmore_base64_images/
+qwen_edit_pa60k_multi_images_v9_selected/
